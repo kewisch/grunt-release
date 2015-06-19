@@ -40,8 +40,12 @@ grunt.loadNpmTasks('grunt-release');
 ```
 
 ## Using grunt-release
+Version numbers should always be bumped in accordance to
+[semver](http://semver.org/). If you ever forget which part of the version
+number should be changed, you can run `grunt release:help` for a quick summary.
 
 **Patch Release:**
+Patch releases are done when making backwards-compatible bug fixes.
 ```shell
 grunt release
 ```
@@ -51,11 +55,14 @@ grunt release:patch
 ```
 
 **Minor Release:**
+If you've added functionality in a backwards-compatible manner, a minor release
+is the right thing to do.
 ```shell
 grunt release:minor
 ```
 
 **Major Release:**
+Should you have made incompatible API changes, it's time for a major release.
 ```shell
 grunt release:major
 ```

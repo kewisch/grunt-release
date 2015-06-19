@@ -14,6 +14,21 @@ var Q = require('q');
 
 module.exports = function(grunt){
   grunt.registerTask('release', 'Bump version, git tag, git push, npm publish', function(type){
+    function help(type) {
+      var helpText = {
+        major: 'Release a MAJOR version when you make incompatible API changes.',
+        minor: 'Release a MINOR version when you add functionality in a backwards-compatible manner.',
+        patch: 'Release a PATCH version when you make backwards-compatible bug fixes.'
+      };
+
+      if (type in helpText) {
+        grunt.log.ok(helpText[type]);
+      } else {
+        for (type in helpText) {
+          grunt.log.ok(helpText[type]);
+        }
+      }
+    }
 
     function setup(file, type){
       var pkg = grunt.file.readJSON(file);
@@ -58,6 +73,11 @@ module.exports = function(grunt){
         newVersion: newVersion,
         pkg: pkg
       };
+    }
+
+    if (type === 'help') {
+      help();
+      return;
     }
 
     // Defaults
@@ -310,6 +330,9 @@ module.exports = function(grunt){
 
       return fn;
     }
+
+    // Show help for the current release type
+    help(type || 'patch');
 
     new Q()
       .then(ifEnabled('beforeBump', runTasks('beforeBump')))
